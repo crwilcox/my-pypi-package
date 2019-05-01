@@ -3,17 +3,20 @@ workflows:
   build_and_deploy:
     jobs:
       - test:
-          name: "test-3.5"
+          name: "test_35"
           version: "3.5"
       - test:
-          name: "test-3.6"
+          name: "test_36"
           version: "3.6"
       - test:
-          name: "test-3.7"
+          name: "test_37"
           version: "3.7"
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
-            - test-3.7
+            - test_37
           filters:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
