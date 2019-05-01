@@ -58,7 +58,9 @@ jobs:
       - run:
           name: init .pypirc
           command: |
-            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "[distutils]" >> ~/.pypirc
+            echo -e "[testpypi]" >> ~/.pypirc
+            echo -e "index-servers = testpypi" >> ~/.pypirc
             echo -e "username = crwilcox" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
