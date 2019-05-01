@@ -5,7 +5,7 @@ with open("README.md") as f:
 
 setuptools.setup(
   name="PyCon2019",
-  version="0.0.1post3",
+  version="0.0.2",
   description="My first package",
   long_description=long_description,
   long_description_content_type="text/markdown",
