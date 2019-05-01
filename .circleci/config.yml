@@ -38,7 +38,6 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install nox
-            pip install -e .
       - run:
           name: run tests
           command: |
