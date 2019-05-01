@@ -14,6 +14,6 @@ def unit(session):
     session.run(
         "py.test",
         "--quiet",
-        os.path.join("tests", "unit"),
+        "tests",
         *session.posargs,
     )
