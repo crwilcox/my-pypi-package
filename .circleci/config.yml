@@ -2,28 +2,25 @@ version: 2.1
 workflows:
   build_and_deploy:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /.*/
-      - test-python-install:
+      - test:
+          name: "test-3.5"
+          version: "3.5"
+      - test:
+          name: "test-3.6"
           version: "3.6"
-          requires:
-            - build
-      - test-python-install:
+      - test:
+          name: "test-3.7"
           version: "3.7"
-          requires:
-            - build
       - deploy:
           requires:
-            - build
+            - test-3.7
           filters:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
             branches:
               ignore: /.*/
 jobs:
-  test-python-install:
+  test:
     parameters:
       version:
         type: string
@@ -37,21 +34,16 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-	          pip install -e .
+            pip install nox
+            pip install -e .
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             nox
-  integration:
-    docker:
-      - image: circleci/python:3.6
-    steps:
-      - run: echo "It works!"
-      - run: echo $RUN_EXTRA_TESTS
   deploy:
     docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:3.7
     steps:
       - checkout
       - run:
@@ -60,7 +52,6 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install twine wheel
-	          pip install -e .
       - run:
           name: init .pypirc
           command: |

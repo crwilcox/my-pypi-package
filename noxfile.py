@@ -17,9 +17,3 @@ def unit(session):
         os.path.join("tests", "unit"),
         *session.posargs,
     )
-
-
-@nox.session(python=["3.7"])
-def docs(session):
-    # verify we can build our docs. if this is running on a tagged release on master, it will publish the docs also
-    pass
